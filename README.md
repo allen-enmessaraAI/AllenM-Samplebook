@@ -7,6 +7,7 @@ A public samplebook of automation builds, workflow patterns, and implementation 
 - `EnmessaraAI Website Lead Qualification MVP/` - website lead qualification flow with voice AI follow-up, call analysis, lead logging, and internal notifications.
 - `doolittle-dentistry/` - sanitized dental appointment and call automation build notes.
 - `earnhardt-auto-shop/` - sanitized automotive service and follow-up automation examples.
+- `HeyGen-Avatar-Automation/` - script-to-avatar-video pipeline using Google Docs/local text input, ElevenLabs audio generation, HeyGen avatar rendering, and ffmpeg stitching.
 
 ## Public Safety
 
