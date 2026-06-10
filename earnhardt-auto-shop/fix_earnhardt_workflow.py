@@ -5,9 +5,9 @@ with open('workflow.json', 'r') as f:
     workflow = json.load(f)
 
 # Define correct constants for Earnhardt
-EARNHARDT_AGENT_ID = "agent_1366e6adc7ed1285dfe778fcee"
-EARNHARDT_PHONE = "+17252289486"
-EARNHARDT_API_KEY = "key_65583dc1971057cffcc0ebe8a598"
+EARNHARDT_AGENT_ID = "{{RETELL_AGENT_ID}}"
+EARNHARDT_PHONE = "{{RETELL_FROM_NUMBER}}"
+EARNHARDT_API_KEY = "{{RETELL_API_KEY}}"
 
 # Allowed fields for PUT /workflows/:id
 allowed_fields = ['name', 'nodes', 'connections', 'settings']

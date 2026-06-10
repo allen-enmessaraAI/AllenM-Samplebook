@@ -69,9 +69,9 @@
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "value": "allen@enmessara.ai",
+          "value": "{{SERVICE_MANAGER_EMAIL}}",
           "mode": "list",
-          "cachedResultName": "allen@enmessara.ai"
+          "cachedResultName": "{{SERVICE_MANAGER_EMAIL}}"
         },
         "returnAll": true,
         "timeMin": "={{ $now.startOf('day').toISO() }}",
@@ -87,13 +87,7 @@
         304
       ],
       "id": "fetch-recent-events",
-      "name": "Fetch Recent Calendar Events",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "RLxXheVb5EvaLabc",
-          "name": "Google Calendar account"
-        }
-      }
+      "name": "Fetch Recent Calendar Events"
     },
     {
       "parameters": {
@@ -194,7 +188,7 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "Bearer key_2fc6e375b443f0c154eac674f220"
+              "value": "Bearer {{RETELL_API_KEY}}"
             },
             {
               "name": "Content-Type",
@@ -204,7 +198,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({ from_number: \"+17252414143\", to_number: $json.phone_number, override_agent_id: \"agent_98b3c6ca4a9841d0c5a6fd3b13\", retell_llm_dynamic_variables: { patient_name: $json.patient_name, appointment_time: $json.appointment_time, appointment_type: $json.appointment_type } }) }}",
+        "jsonBody": "={{ JSON.stringify({ from_number: \"{{RETELL_FROM_NUMBER}}\", to_number: $json.phone_number, override_agent_id: \"{{RETELL_AGENT_ID}}\", retell_llm_dynamic_variables: { patient_name: $json.patient_name, appointment_time: $json.appointment_time, appointment_type: $json.appointment_type } }) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
@@ -214,21 +208,7 @@
         304
       ],
       "id": "retell-create-call",
-      "name": "Retell: Initiate Outbound Call",
-      "credentials": {
-        "httpHeaderAuth": {
-          "id": "48q0LXxeyqPYQixK",
-          "name": "Header Auth account"
-        },
-        "httpBearerAuth": {
-          "id": "hVVZLa7pD1EBk6ua",
-          "name": "Bearer Auth account"
-        },
-        "httpCustomAuth": {
-          "id": "5ATmi12Ln0dVWz51",
-          "name": "HealthcareAgent"
-        }
-      }
+      "name": "Retell: Initiate Outbound Call"
     },
     {
       "parameters": {
@@ -289,13 +269,7 @@
         304
       ],
       "id": "tag-called-001",
-      "name": "Tag Event as Called",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "RLxXheVb5EvaLabc",
-          "name": "Google Calendar account"
-        }
-      }
+      "name": "Tag Event as Called"
     }
   ],
   "connections": {
@@ -397,5 +371,16 @@
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false
+  },
+  "active": false,
+  "isArchived": false,
+  "versionId": "{{N8N_VERSION_ID}}",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "versionCounter": 1,
+  "tags": [],
+  "meta": {
+    "sample": true,
+    "credentialsRequired": true
   }
 }

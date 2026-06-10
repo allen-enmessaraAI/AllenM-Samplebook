@@ -9,12 +9,12 @@
 ## Pre-Flight Checks ✓
 
 ### N8N Setup
-- [ ] N8N workflow `khja4S7lboS5kyjm` is **ACTIVE** (not draft/inactive)
+- [ ] N8N workflow `{{N8N_WORKFLOW_ID}}` is **ACTIVE** (not draft/inactive)
 - [ ] Webhook node has HTTP Method set to **POST**
 - [ ] Webhook node is properly connected to downstream nodes
 - [ ] Webhook URL generated and accessible: 
   ```
-  https://enmessara.app.n8n.cloud/webhook/khja4S7lboS5kyjm
+  https://{{N8N_BASE_URL}}/webhook/{{N8N_WORKFLOW_ID}}
   ```
 - [ ] Test webhook URL with curl (see below)
 
@@ -27,7 +27,7 @@
 
 ### Code Changes
 - [ ] `assets/main.js` updated with correct webhook URL
-- [ ] Webhook URL matches n8n instance: `khja4S7lboS5kyjm`
+- [ ] Webhook URL matches n8n instance: `{{N8N_WORKFLOW_ID}}`
 - [ ] Changes committed to git
 - [ ] Changes deployed to Netlify
 
@@ -40,7 +40,7 @@
 ### 1a. Manual CURL Test
 ```bash
 curl -X POST \
-  'https://enmessara.app.n8n.cloud/webhook/khja4S7lboS5kyjm' \
+  'https://{{N8N_BASE_URL}}/webhook/{{N8N_WORKFLOW_ID}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "name": "Test User",
@@ -61,7 +61,7 @@ curl -X POST \
 **Error (if any):** ___________________________
 
 ### 1b. Check N8N Execution Logs
-1. Open n8n workflow `khja4S7lboS5kyjm`
+1. Open n8n workflow `{{N8N_WORKFLOW_ID}}`
 2. Click **Executions** tab
 3. Look for execution from CURL test
 4. Click to view details
@@ -116,7 +116,7 @@ curl -X POST \
 **Console Errors:** ___________________________
 
 ### 2d. Check N8N Logs
-1. Open n8n workflow `khja4S7lboS5kyjm`
+1. Open n8n workflow `{{N8N_WORKFLOW_ID}}`
 2. Click **Executions** tab
 3. Look for recent execution with contact form data
 4. Verify data structure matches sent payload
@@ -184,7 +184,7 @@ curl -X POST \
 **Netlify Submission ID:** ___________________________
 
 ### 3d. Check N8N Logs
-1. Open n8n workflow `khja4S7lboS5kyjm`
+1. Open n8n workflow `{{N8N_WORKFLOW_ID}}`
 2. Click **Executions** tab
 3. Look for execution from Netlify notification (within 5-10 seconds of form submission)
 
@@ -401,7 +401,7 @@ Before deploying to production:
 - [ ] N8N webhook URL is finalized and stable
 - [ ] Netlify form notification configured correctly
 - [ ] Error handling messages are user-friendly
-- [ ] Contact email is correct (hello@enmessara.ai)
+- [ ] Contact email is correct ({{NOTIFICATION_EMAIL}})
 - [ ] Success messages are professional
 - [ ] Forms have appropriate field validation
 - [ ] GDPR/privacy disclaimers in place (if needed)

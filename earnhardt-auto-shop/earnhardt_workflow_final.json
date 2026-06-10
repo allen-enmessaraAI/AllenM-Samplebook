@@ -71,9 +71,9 @@
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "value": "allen@enmessara.ai",
+          "value": "{{SERVICE_MANAGER_EMAIL}}",
           "mode": "list",
-          "cachedResultName": "allen@enmessara.ai"
+          "cachedResultName": "{{SERVICE_MANAGER_EMAIL}}"
         },
         "returnAll": true,
         "timeMin": "={{ $now.startOf('day').toISO() }}",
@@ -89,13 +89,7 @@
         352
       ],
       "id": "c1b2c3d4-3333-4444-cccc-000000000004",
-      "name": "Fetch Calendar Events",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "RLxXheVb5EvaLabc",
-          "name": "Google Calendar account"
-        }
-      }
+      "name": "Fetch Calendar Events"
     },
     {
       "parameters": {
@@ -187,7 +181,7 @@
           "parameters": [
             {
               "name": "Authorization",
-              "value": "Bearer key_65583dc1971057cffcc0ebe8a598"
+              "value": "Bearer {{RETELL_API_KEY}}"
             },
             {
               "name": "Content-Type",
@@ -197,7 +191,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ JSON.stringify({\n  \"from_number\": \"+17252289486\",\n  \"to_number\": $json.phone_number,\n  \"override_agent_id\": \"agent_1366e6adc7ed1285dfe778fcee\",\n  \"retell_llm_dynamic_variables\": {\n    \"customer_name\": $json.customer_name,\n    \"appointment_time\": $json.appointment_time,\n    \"appointment_type\": $json.appointment_type\n  }\n}) }}",
+        "jsonBody": "={{ JSON.stringify({\n  \"from_number\": \"{{RETELL_FROM_NUMBER}}\",\n  \"to_number\": $json.phone_number,\n  \"override_agent_id\": \"{{RETELL_AGENT_ID}}\",\n  \"retell_llm_dynamic_variables\": {\n    \"customer_name\": $json.customer_name,\n    \"appointment_time\": $json.appointment_time,\n    \"appointment_type\": $json.appointment_type\n  }\n}) }}",
         "options": {}
       },
       "id": "c1b2c3d4-3333-4444-cccc-000000000008",
@@ -268,13 +262,7 @@
       "position": [
         2000,
         352
-      ],
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "RLxXheVb5EvaLabc",
-          "name": "Google Calendar account"
-        }
-      }
+      ]
     }
   ],
   "connections": {
@@ -376,5 +364,16 @@
     "executionOrder": "v1",
     "callerPolicy": "workflowsFromSameOwner",
     "availableInMCP": false
+  },
+  "active": false,
+  "isArchived": false,
+  "versionId": "{{N8N_VERSION_ID}}",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "versionCounter": 1,
+  "tags": [],
+  "meta": {
+    "sample": true,
+    "credentialsRequired": true
   }
 }

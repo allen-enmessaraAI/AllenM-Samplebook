@@ -2,7 +2,7 @@
 
 **Date:** February 16, 2026  
 **Commit Hash:** `cbea55c`  
-**N8N Workflow ID:** `khja4S7lboS5kyjm`  
+**N8N Workflow ID:** `{{N8N_WORKFLOW_ID}}`
 **Status:** ✅ Ready for Testing & Deployment
 
 ---
@@ -15,7 +15,7 @@ This implementation establishes a complete integration between Netlify forms and
 - **Location:** [contact.html](contact.html)
 - **Trigger:** User submits contact form
 - **Handler:** Custom JavaScript with AJAX POST
-- **Target:** n8n webhook `khja4S7lboS5kyjm`
+- **Target:** n8n webhook `{{N8N_WORKFLOW_ID}}`
 - **Fields:** name, email, phone, company, subject, message
 - **Validation:** Client-side email & required field validation
 
@@ -35,7 +35,7 @@ This implementation establishes a complete integration between Netlify forms and
 - **[assets/main.js](assets/main.js)** ✏️
   - Enhanced `initForms()` function with improved error handling
   - Added payload enrichment (timestamp, formType, source metadata)
-  - Updated webhook URL to: `https://enmessara.app.n8n.cloud/webhook/khja4S7lboS5kyjm`
+  - Updated webhook URL to: `https://{{N8N_BASE_URL}}/webhook/{{N8N_WORKFLOW_ID}}`
   - Improved error messages and user feedback
 
 ### Created
@@ -110,8 +110,8 @@ This implementation establishes a complete integration between Netlify forms and
                             │
             ┌───────────────▼────────────────┐
             │  N8N Webhook Endpoint          │
-            │  khja4S7lboS5kyjm              │
-            │  (enmessara.app.n8n.cloud)    │
+            │  {{N8N_WORKFLOW_ID}}              │
+            │  ({{N8N_BASE_URL}})    │
             └───────────────┬────────────────┘
                             │
                       (Webhook received)
@@ -129,7 +129,7 @@ This implementation establishes a complete integration between Netlify forms and
 
 ### Webhook Endpoint
 ```
-URL: https://enmessara.app.n8n.cloud/webhook/khja4S7lboS5kyjm
+URL: https://{{N8N_BASE_URL}}/webhook/{{N8N_WORKFLOW_ID}}
 Method: POST
 Content-Type: application/json
 ```
@@ -226,7 +226,7 @@ Issues Found:
 
 ### What to Test Next
 1. **Activate N8N Workflow** (CRITICAL)
-   - Verify workflow `khja4S7lboS5kyjm` is ACTIVE in n8n dashboard
+   - Verify workflow `{{N8N_WORKFLOW_ID}}` is ACTIVE in n8n dashboard
    - Test webhook connectivity with CURL
    
 2. **Form Submission Tests** (After webhook activation)
@@ -283,11 +283,11 @@ Post-Deployment:
 
 ```bash
 # Check 1: Is webhook returning 404?
-curl -v https://enmessara.app.n8n.cloud/webhook/khja4S7lboS5kyjm
+curl -v https://{{N8N_BASE_URL}}/webhook/{{N8N_WORKFLOW_ID}}
 
 # Check 2: Is workflow active in n8n dashboard?
-# Login to: https://enmessara.app.n8n.cloud
-# Verify: Workflow khja4S7lboS5kyjm shows ACTIVE status
+# Login to: https://{{N8N_BASE_URL}}
+# Verify: Workflow {{N8N_WORKFLOW_ID}} shows ACTIVE status
 ```
 
 ### 2. **BEFORE TESTING** (After webhook activated)

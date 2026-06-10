@@ -9,21 +9,21 @@
 | Field | Value |
 |-------|-------|
 | **Agent Name** | Kate Doolittle |
-| **Agent ID** | `agent_98b3c6ca4a9841d0c5a6fd3b13` |
-| **LLM ID** | `llm_56f5b63b8b3d94d5487aabb7ad5a` |
+| **Agent ID** | `{{RETELL_AGENT_ID}}` |
+| **LLM ID** | `{{RETELL_LLM_ID}}` |
 | **Voice** | 11labs-Kate (Female) |
 | **Language** | en-US |
 | **Model** | GPT-4o |
 | **Post-Call Analysis Model** | GPT-4o-mini |
 | **Max Call Duration** | 10 minutes |
-| **Phone Number** | +17252414143 |
-| **Webhook URL** | `https://enmessara.app.n8n.cloud/webhook/doolittle-retell-webhook` |
+| **Phone Number** | {{RETELL_FROM_NUMBER}} |
+| **Webhook URL** | `https://{{N8N_BASE_URL}}/webhook/doolittle-retell-webhook` |
 
 ### Agent Tools
 | Tool | Type | Description |
 |------|------|-------------|
 | end_call | end_call | Ends the call (emergency 911 redirect or natural conclusion) |
-| route_call | transfer_call | Cold transfer to Office Manager at +17252414143 |
+| route_call | transfer_call | Cold transfer to Office Manager at {{RETELL_FROM_NUMBER}} |
 
 ### Post-Call Analysis Fields (12 fields)
 | Field | Type | Description |
@@ -57,7 +57,7 @@
 | **Workflow Name** | Doolittle Dentistry - Retell Post-Call Automation |
 | **Workflow ID** | `O326l5tva09Sij0Y` |
 | **Status** | Active |
-| **Production Webhook** | `https://enmessara.app.n8n.cloud/webhook/doolittle-retell-webhook` |
+| **Production Webhook** | `https://{{N8N_BASE_URL}}/webhook/doolittle-retell-webhook` |
 
 ### Pipeline (6 nodes)
 ```
@@ -92,8 +92,8 @@ Retell Webhook (trigger)
 ### Email Routing
 | Condition | To | CC |
 |-----------|----|----|
-| All calls | allen@enmessara.ai | — |
-| P0 Emergency | allen@enmessara.ai | allen.e89.marcus@gmail.com (Dr. Doolittle) |
+| All calls | {{SERVICE_MANAGER_EMAIL}} | — |
+| P0 Emergency | {{SERVICE_MANAGER_EMAIL}} | {{SALES_MANAGER_EMAIL}} (Dr. Doolittle) |
 
 ### Google Sheets
 | Field | Value |
@@ -101,7 +101,7 @@ Retell Webhook (trigger)
 | **Sheet Name** | Doolittle Dentistry Retell Call Logs |
 | **Document ID** | `1phG6XAAPNUaAMtgw23l-Mjbb-LjE46YLEVDbhOupoGw` |
 | **Sheet Tab** | `gid=0` (first tab) |
-| **Credential** | `hstzwLoRc4QOJVEG` (Google Sheets OAuth2) |
+| **Credential** | `{{GOOGLE_SHEETS_CREDENTIAL_ID}}` (Google Sheets OAuth2) |
 
 ### Google Sheets Column Mappings
 | Sheet Header | lead_payload Source |
@@ -126,7 +126,7 @@ Retell Webhook (trigger)
 | **Workflow ID** | `uYAEnKqeCrzrW5YV` |
 | **Status** | Active |
 | **Trigger** | Google Calendar Watch Channel (instant push) |
-| **Webhook URL** | `https://enmessara.app.n8n.cloud/webhook/doolittle-calendar-watch` |
+| **Webhook URL** | `https://{{N8N_BASE_URL}}/webhook/doolittle-calendar-watch` |
 
 ### Pipeline (8 nodes)
 ```
@@ -162,9 +162,9 @@ Regex: `/(Phone|phone_number|phone)\s*:\s*([+\d\-\s()]+)/i` (case-insensitive, m
 ```
 POST https://api.retellai.com/v2/create-phone-call
 {
-  "from_number": "+17252414143",
+  "from_number": "{{RETELL_FROM_NUMBER}}",
   "to_number": "<normalized E.164 from description>",
-  "override_agent_id": "agent_98b3c6ca4a9841d0c5a6fd3b13",
+  "override_agent_id": "{{RETELL_AGENT_ID}}",
   "retell_llm_dynamic_variables": {
     "patient_name": "<from title>",
     "appointment_time": "<from event start>",
@@ -193,8 +193,8 @@ singleEvents: true
 | **Workflow Name** | Doolittle - Register Calendar Watch (Utility) |
 | **Workflow ID** | `j8zte3WvVPwvvEVz` |
 | **Purpose** | One-click manual trigger to register a Google Calendar watch channel |
-| **Watch Address** | `https://enmessara.app.n8n.cloud/webhook/doolittle-calendar-watch` |
-| **Calendar Credential** | `RLxXheVb5EvaLabc` (Google Calendar OAuth2) |
+| **Watch Address** | `https://{{N8N_BASE_URL}}/webhook/doolittle-calendar-watch` |
+| **Calendar Credential** | `{{GOOGLE_CALENDAR_CREDENTIAL_ID}}` (Google Calendar OAuth2) |
 | **Channel Expiry** | ~7 days — must re-register before trade show |
 
 **Note:** Each registration requires a fresh UUID for the channel ID. Generate a new one before re-running.
@@ -220,20 +220,20 @@ Workflow 1: Webhook → Filter → lead_payload → Email → Google Sheets
 
 | Service | Key/ID | Notes |
 |---------|--------|-------|
-| Retell API Key | `key_2fc6e375b443f0c154eac674f220` | Bearer token |
-| Retell Agent ID | `agent_98b3c6ca4a9841d0c5a6fd3b13` | Kate Doolittle |
-| Retell LLM ID | `llm_56f5b63b8b3d94d5487aabb7ad5a` | GPT-4o prompt engine |
-| Retell Phone | `+17252414143` | From number for outbound |
-| n8n Base URL | `https://enmessara.app.n8n.cloud` | Cloud instance |
+| Retell API Key | `{{RETELL_API_KEY}}` | Bearer token |
+| Retell Agent ID | `{{RETELL_AGENT_ID}}` | Kate Doolittle |
+| Retell LLM ID | `{{RETELL_LLM_ID}}` | GPT-4o prompt engine |
+| Retell Phone | `{{RETELL_FROM_NUMBER}}` | From number for outbound |
+| n8n Base URL | `https://{{N8N_BASE_URL}}` | Cloud instance |
 | Workflow 1 (Post-Call) | `O326l5tva09Sij0Y` | Active |
 | Workflow 2 (Outbound) | `uYAEnKqeCrzrW5YV` | Active |
 | Utility (Watch Register) | `j8zte3WvVPwvvEVz` | Manual trigger |
-| Google Calendar Credential | `RLxXheVb5EvaLabc` | OAuth2 |
-| Google Sheets Credential | `hstzwLoRc4QOJVEG` | OAuth2 |
-| Gmail Credential | `ljnLfTxRZoCe4R8Q` | OAuth2 |
-| Gmail (Office Manager) | `allen@enmessara.ai` | Summary emails |
-| Gmail (Doctor) | `allen.e89.marcus@gmail.com` | Emergency CC |
-| Google Calendar | `allen@enmessara.ai` | Watch channel source |
+| Google Calendar Credential | `{{GOOGLE_CALENDAR_CREDENTIAL_ID}}` | OAuth2 |
+| Google Sheets Credential | `{{GOOGLE_SHEETS_CREDENTIAL_ID}}` | OAuth2 |
+| Gmail Credential | `{{GMAIL_CREDENTIAL_ID}}` | OAuth2 |
+| Gmail (Office Manager) | `{{SERVICE_MANAGER_EMAIL}}` | Summary emails |
+| Gmail (Doctor) | `{{SALES_MANAGER_EMAIL}}` | Emergency CC |
+| Google Calendar | `{{SERVICE_MANAGER_EMAIL}}` | Watch channel source |
 | Google Sheet ID | `1phG6XAAPNUaAMtgw23l-Mjbb-LjE46YLEVDbhOupoGw` | Call logs |
 
 ---

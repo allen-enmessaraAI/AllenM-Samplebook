@@ -9,15 +9,15 @@
 | Field | Value |
 |-------|-------|
 | **Agent Name** | Dale |
-| **Agent ID** | `agent_1366e6adc7ed1285dfe778fcee` |
-| **LLM ID** | `llm_f9dd69c5fff756372d4c89f0a6d4` |
+| **Agent ID** | `{{RETELL_AGENT_ID}}` |
+| **LLM ID** | `{{RETELL_LLM_ID}}` |
 | **Voice** | 11labs-Adrian (Male) |
 | **Language** | multi (EN/ES auto-detect for both STT and LLM) |
 | **Model** | GPT-4o |
 | **Post-Call Analysis Model** | GPT-4o-mini |
 | **Max Call Duration** | 10 minutes |
-| **Phone Number** | +17252289486 |
-| **Webhook URL** | `https://enmessara.app.n8n.cloud/webhook/earnhardt-retell-webhook` |
+| **Phone Number** | {{RETELL_FROM_NUMBER}} |
+| **Webhook URL** | `https://{{N8N_BASE_URL}}/webhook/earnhardt-retell-webhook` |
 
 ### Agent Tools
 | Tool | Type | Description |
@@ -38,9 +38,9 @@
 | text_optin | boolean | Text message opt-in |
 | insurance_name | string | Insurance provider (Body Work/Repairs) |
 | insurance_policy_number | string | Policy number (Body Work/Repairs) |
-| claim_agent_name | string | Claims agent name or N/A |
-| claim_agent_email | string | Claims agent email or N/A |
-| claim_agent_number | string | Claims agent phone or N/A |
+| claim_agent | string | Claims agent name or N/A |
+| claim_agent | string | Claims agent email or N/A |
+| claim_agent | string | Claims agent phone or N/A |
 | upsell_interested | boolean | Radiator flush upsell interest (Tires + >30k miles) |
 
 ### Dynamic Variables (injected at call time)
@@ -59,7 +59,7 @@
 | **Workflow Name** | Earnhardt Auto Shop - Retell Post-Call Automation |
 | **Workflow ID** | `iEbeP2uQtxMQxlqy` |
 | **Status** | Active |
-| **Production Webhook** | `https://enmessara.app.n8n.cloud/webhook/earnhardt-retell-webhook` |
+| **Production Webhook** | `https://{{N8N_BASE_URL}}/webhook/earnhardt-retell-webhook` |
 
 ### Pipeline (8 nodes)
 ```
@@ -94,8 +94,8 @@ Retell Webhook (POST trigger)
 ### Email Routing
 | Condition | To | Subject Pattern |
 |-----------|----|----|
-| car_age > 3 | allen.e89.marcus@gmail.com (Sales) | [HIGH PRIORITY] Trade-In Lead - {name} |
-| car_age <= 3 | allen@enmessara.ai (Service) | Service Confirmation - {name} |
+| car_age > 3 | {{SALES_MANAGER_EMAIL}} (Sales) | [HIGH PRIORITY] Trade-In Lead - {name} |
+| car_age <= 3 | {{SERVICE_MANAGER_EMAIL}} (Service) | Service Confirmation - {name} |
 
 ---
 
@@ -106,7 +106,7 @@ Retell Webhook (POST trigger)
 | **Workflow Name** | Earnhardt Auto Shop - Calendar Availability Helper |
 | **Workflow ID** | `VxK2zcht3OctrDfm` |
 | **Status** | Active |
-| **Production Webhook** | `https://enmessara.app.n8n.cloud/webhook/earnhardt-calendar-check` |
+| **Production Webhook** | `https://{{N8N_BASE_URL}}/webhook/earnhardt-calendar-check` |
 
 ### Pipeline (4 nodes)
 ```
@@ -136,7 +136,7 @@ Calendar Check Webhook (POST)
 | **Workflow Name** | Earnhardt Auto Shop - Outbound via Calendar Trigger |
 | **Workflow ID** | `KJk3TuaZmlqd0j9c` |
 | **Status** | Active |
-| **Production Webhook** | `https://enmessara.app.n8n.cloud/webhook/earnhardt-calendar-watch` |
+| **Production Webhook** | `https://{{N8N_BASE_URL}}/webhook/earnhardt-calendar-watch` |
 
 ### Pipeline (8 nodes)
 ```
@@ -158,9 +158,9 @@ Calendar Watch Webhook (instant trigger from Google)
 ### Retell API Call
 ```json
 {
-  "from_number": "+17252289486",
+  "from_number": "{{RETELL_FROM_NUMBER}}",
   "to_number": "<from calendar description>",
-  "override_agent_id": "agent_1366e6adc7ed1285dfe778fcee",
+  "override_agent_id": "{{RETELL_AGENT_ID}}",
   "retell_llm_dynamic_variables": {
     "customer_name": "<from title>",
     "appointment_time": "<from event start>",
@@ -178,7 +178,7 @@ Calendar Watch Webhook (instant trigger from Google)
 | **Workflow Name** | Earnhardt Auto - Register Calendar Watch (Utility) |
 | **Workflow ID** | `rzjOerqQJDoyNbkn` |
 | **Status** | Inactive (manual trigger only) |
-| **Watch Address** | `https://enmessara.app.n8n.cloud/webhook/earnhardt-calendar-watch` |
+| **Watch Address** | `https://{{N8N_BASE_URL}}/webhook/earnhardt-calendar-watch` |
 | **Channel Expiry** | ~7 days (re-register before expiry) |
 
 ---
@@ -203,9 +203,9 @@ Calendar Watch Webhook (instant trigger from Google)
 | mileage | `mileage` |
 | insurance_name | `insurance_name` |
 | insurance_policy_number | `insurance_policy_number` |
-| claim_agent_name | `claim_agent_name` |
-| claim_agent_email | `claim_agent_email` |
-| claim_agent_number | `claim_agent_number` |
+| claim_agent | `claim_agent` |
+| claim_agent | `claim_agent` |
+| claim_agent | `claim_agent` |
 | upsell_interested | `upsell_interested` |
 | service_summary | `service_summary` |
 | qualification_score | `qualification_score` |
@@ -217,22 +217,22 @@ Calendar Watch Webhook (instant trigger from Google)
 
 | Service | Key/ID | Notes |
 |---------|--------|-------|
-| Retell API Key | `key_65583dc1971057cffcc0ebe8a598` | Bearer token |
-| Retell Agent ID | `agent_1366e6adc7ed1285dfe778fcee` | Dale |
-| Retell LLM ID | `llm_f9dd69c5fff756372d4c89f0a6d4` | GPT-4o prompt engine |
-| Retell Phone | `+17252289486` | From number for outbound |
+| Retell API Key | `{{RETELL_API_KEY}}` | Bearer token |
+| Retell Agent ID | `{{RETELL_AGENT_ID}}` | Dale |
+| Retell LLM ID | `{{RETELL_LLM_ID}}` | GPT-4o prompt engine |
+| Retell Phone | `{{RETELL_FROM_NUMBER}}` | From number for outbound |
 | Service Manager Phone | `+17252491032` | route_call transfer target |
-| n8n Base URL | `https://enmessara.app.n8n.cloud` | Cloud instance |
+| n8n Base URL | `https://{{N8N_BASE_URL}}` | Cloud instance |
 | WF1 (Post-Call) | `iEbeP2uQtxMQxlqy` | Active |
 | WF Calendar Helper | `VxK2zcht3OctrDfm` | Active |
 | WF2 (Outbound) | `KJk3TuaZmlqd0j9c` | Active |
 | WF Utility (Watch) | `rzjOerqQJDoyNbkn` | Manual trigger |
-| Google Calendar Credential | `RLxXheVb5EvaLabc` | OAuth2 |
-| Google Sheets Credential | `hstzwLoRc4QOJVEG` | OAuth2 |
-| Gmail Credential | `ljnLfTxRZoCe4R8Q` | OAuth2 |
-| Service Manager Email | `allen@enmessara.ai` | Summary emails |
-| Sales Manager Email | `allen.e89.marcus@gmail.com` | Trade-in alerts |
-| Google Calendar | `allen@enmessara.ai` (primary) | Watch channel source |
+| Google Calendar Credential | `{{GOOGLE_CALENDAR_CREDENTIAL_ID}}` | OAuth2 |
+| Google Sheets Credential | `{{GOOGLE_SHEETS_CREDENTIAL_ID}}` | OAuth2 |
+| Gmail Credential | `{{GMAIL_CREDENTIAL_ID}}` | OAuth2 |
+| Service Manager Email | `{{SERVICE_MANAGER_EMAIL}}` | Summary emails |
+| Sales Manager Email | `{{SALES_MANAGER_EMAIL}}` | Trade-in alerts |
+| Google Calendar | `{{SERVICE_MANAGER_EMAIL}}` (primary) | Watch channel source |
 
 ---
 

@@ -2,7 +2,7 @@
 
 **Date:** February 16, 2026  
 **Execution ID:** #938  
-**Workflow:** khja4S7lboS5kyjm  
+**Workflow:** {{N8N_WORKFLOW_ID}}
 **Status:** ✅ **FIXED**  
 **Fix Commit:** `f8478bf`
 
@@ -164,8 +164,8 @@ These should be **rejected** before sending to n8n:
 
 After submitting form with various phone formats:
 
-1. Go to n8n: https://enmessara.app.n8n.cloud
-2. Open workflow khja4S7lboS5kyjm
+1. Go to n8n: https://{{N8N_BASE_URL}}
+2. Open workflow {{N8N_WORKFLOW_ID}}
 3. Click **Executions** tab
 4. Find execution with test phone
 5. Verify:

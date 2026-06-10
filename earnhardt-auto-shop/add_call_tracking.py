@@ -81,7 +81,7 @@ tag_event_node = {
     "position": [2000, 352], # After Retell Outbound Call (1792)
     "credentials": {
         "googleCalendarOAuth2Api": {
-            "id": "RLxXheVb5EvaLabc",
+            "id": "{{GOOGLE_CALENDAR_CREDENTIAL_ID}}",
             "name": "Google Calendar account"
         }
     }

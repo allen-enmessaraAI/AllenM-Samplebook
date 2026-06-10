@@ -74,9 +74,9 @@ N8N workflow processes data
 ### Step 1: Verify N8N Workflow is Active
 ```bash
 # Check workflow status in n8n dashboard:
-https://enmessara.app.n8n.cloud
+https://{{N8N_BASE_URL}}
 
-# The workflow khja4S7lboS5kyjm should show: ACTIVE ✓
+# The workflow {{N8N_WORKFLOW_ID}} should show: ACTIVE ✓
 ```
 
 ### Step 2: Test Webhook Connectivity
@@ -252,7 +252,7 @@ Status: Add HTTP POST notification → Test form
 
 For form submissions that need human follow-up:
 ```
-Email: hello@enmessara.ai
+Email: {{NOTIFICATION_EMAIL}}
 Phone: [Add if available]
 Website: https://enmessara.ai
 ```
