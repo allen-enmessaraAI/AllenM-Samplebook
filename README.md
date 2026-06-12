@@ -8,6 +8,7 @@ A public samplebook of automation builds, workflow patterns, and implementation 
 - `doolittle-dentistry/` - sanitized dental appointment and call automation build notes.
 - `earnhardt-auto-shop/` - sanitized automotive service and follow-up automation examples.
 - `HeyGen-Avatar-Automation/` - script-to-avatar-video pipeline using Google Docs/local text input, ElevenLabs audio generation, HeyGen avatar rendering, and ffmpeg stitching.
+- `agent-suites/` - complete saved agent-suite library with 154 Codex-compatible skill prompts, supporting assets, and a granular implementation plan.
 
 ## Public Safety
 
